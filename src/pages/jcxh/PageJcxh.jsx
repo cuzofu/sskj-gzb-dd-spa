@@ -57,17 +57,17 @@ class Jcxh extends Component {
   };
 
   onCzClick = () => {
-    const BUTTONS = ['校核', '取消'];
+    const BUTTONS = ['校核', '退回', '取消'];
     ActionSheet.showActionSheetWithOptions({
         options: BUTTONS,
-        cancelButtonIndex: 1,
+        cancelButtonIndex: 2,
         title: '操作',
         message: <div style={{color:'red'}}>这里的操作会使勾选项会全部改变,请谨慎操作!</div>,
         maskClosable: true,
         'data-seed': 'logId',
       },
       (buttonIndex) => {
-        if (buttonIndex !== 1) {
+        if (buttonIndex !== 2) {
           let selectedData = this.state.dataBlob.filter((data)=>{
             return data.selected === true;
           });

@@ -6,8 +6,6 @@ import Filterbox from 'components/filterbox';
 import Rowbox from 'components/rowbox';
 const TabPane = Tabs.TabPane;
 
-import StorageUtils from '../../app/storage';
-
 class Jcsp extends Component {
 
   constructor(props) {
@@ -59,17 +57,17 @@ class Jcsp extends Component {
   };
 
   onCzClick = () => {
-    const BUTTONS = ['审批', '取消'];
+    const BUTTONS = ['审批通过', '审批退回', '取消'];
     ActionSheet.showActionSheetWithOptions({
         options: BUTTONS,
-        cancelButtonIndex: 1,
+        cancelButtonIndex: 2,
         title: '操作',
         message: <div style={{color:'red'}}>这里的操作会使勾选项会全部改变,请谨慎操作!</div>,
         maskClosable: true,
         'data-seed': 'logId',
       },
       (buttonIndex) => {
-        if (buttonIndex !== 1) {
+        if (buttonIndex !== 2) {
           let selectedData = this.state.dataBlob.filter((data)=>{
             return data.selected === true;
           });
@@ -92,35 +90,36 @@ class Jcsp extends Component {
       <div className="page-jcsp">
 
         <div className="nav">
-          <Tabs defaultActiveKey="1" animated={true} swipeable={false}
+          <Flex>
+            <Flex style={{flex:'1'}}> <Button icon="search" across={true} className="btn-sc"
+                                              onClick={this.onSxClick}>筛选</Button>
+            </Flex>
+            <Flex style={{flex:'1'}}> <Button icon="ellipsis" across={true} className="btn-sc"
+                                              onClick={this.onCzClick}>操作</Button> </Flex>
+          </Flex>
+          <ListView ref="lv"
+                    dataSource={this.state.dataSource}
+                    renderFooter={() => (
+                      <div className="loading-list">
+                        {this.state.isLoading ? <ActivityIndicator text="加载中..."/> : <div>加载完毕</div>}
+                      </div>
+                    )}
+                    renderRow={row}
+                    style={{
+                      height: window.innerHeight-110,
+                      overflow: 'auto',
+                    }}
+                    pageSize={10}
+                    onScroll={() => { console.log('scroll'); }}
+                    scrollRenderAheadDistance={500}
+                    scrollEventThrottle={200}
+                    onEndReached={this.onEndReached}
+                    onEndReachedThreshold={100}
+          />
+          {/*<Tabs defaultActiveKey="1" animated={true} swipeable={false}
                 onTabClick={ (activeKey) => this.handleTabClick(activeKey) }>
             <TabPane tab="待我审批" key="1">
-              <Flex>
-                <Flex style={{flex:'1'}}> <Button icon="search" across={true} className="btn-sc"
-                                                  onClick={this.onSxClick}>筛选</Button>
-                </Flex>
-                <Flex style={{flex:'1'}}> <Button icon="ellipsis" across={true} className="btn-sc"
-                                                  onClick={this.onCzClick}>操作</Button> </Flex>
-              </Flex>
-              <ListView ref="lv"
-                        dataSource={this.state.dataSource}
-                        renderFooter={() => (
-                          <div className="loading-list">
-                            {this.state.isLoading ? <ActivityIndicator text="加载中..."/> : <div>加载完毕</div>}
-                          </div>
-                        )}
-                        renderRow={row}
-                        style={{
-                          height: window.innerHeight-110,
-                          overflow: 'auto',
-                        }}
-                        pageSize={10}
-                        onScroll={() => { console.log('scroll'); }}
-                        scrollRenderAheadDistance={500}
-                        scrollEventThrottle={200}
-                        onEndReached={this.onEndReached}
-                        onEndReachedThreshold={100}
-              />
+
             </TabPane>
             <TabPane tab="我已审批" key="2">
               <Flex>
@@ -131,7 +130,7 @@ class Jcsp extends Component {
                                                   onClick={this.onCzClick}>操作</Button> </Flex>
               </Flex>
             </TabPane>
-          </Tabs>
+          </Tabs>*/}
         </div>
 
       </div>

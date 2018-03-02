@@ -7,5 +7,6 @@
   "MOCK_URL": "/mock/",
   "API_URL": "http://111.47.65.193:8000/",
   "YCZAZ_URL": "http://www.ycjsjg.net/cmis/",
-  "PDF_URL": "http://192.168.0.16:8280/hbjd"
+  "PDF_URL": "http://192.168.0.16:8280/hbjd",
+  "TCMSServer": "http://219.139.133.203:8180/TCMSV3"
 }

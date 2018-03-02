@@ -20,7 +20,7 @@ export default {
       isError: false,
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
-      }),
+      })
     }
   },
 
@@ -89,31 +89,36 @@ export default {
   },
 
   // 审批
-  async toCheck(ctx, clicked) {
+  async toCheck(ctx, action) {
 
-    if ('审批' === clicked) {
-      let yjids = [];
+    if (action) {
+      let jyids = [];
       ctx.getState().dataBlob.map((data)=>{
         if (data.selected) {
-          yjids.push(data.jyid);
+          jyids.push(data.jyid);
         }
       });
-
+      let params = {
+        jyids: jyids,
+        tuiHui: '退回' === action ? 1 : 0,
+        wsCode: 'ws_shenpi',
+        ddid: ''
+      };
       const userInfo = StorageUtils.getUserInfo();
-      let rtn = false;
+      Toast.fail(userInfo.userid, 2);
       if (userInfo && userInfo.userid) {
-
-        rtn = await ctx.fn.DB.DingTalkAPI.updJianYan({
-          jyids: yjids,
-          ddid: userInfo.userid,
-          wsCode: 'ws_shenpi'
-        }).catch(()=> {
-          Toast.fail('提交审批失败!', 2);
-          rtn = false;
-        });
+        params.ddid = userInfo.userid;
       } else {
-        rtn = false;
+        Toast.fail('操作失败', 2);
+        return false;
       }
+
+      let rtn = false;
+      rtn = await ctx.fn.DB.DingTalkAPI.updJianYan(params).catch(()=> {
+        Toast.fail('操作失败', 2);
+        rtn = false;
+      });
+
       if (rtn) {
 
         ctx.setState({
@@ -126,7 +131,7 @@ export default {
         let content = await ctx.fn.DB.DingTalkAPI.getDaiJianList({
           pageNum: 1,
           rowCount: ctx.getState().pageSize,
-          ddid: userInfo.userid,
+          ddid: params.ddid,
           wsCode: 'ws_shenpi'
         }).catch(()=> {
           ctx.setState({
@@ -152,9 +157,9 @@ export default {
           isLoading: false,
         });
 
-        Toast.fail('提交审批成功!', 2);
+        Toast.fail('操作成功', 2);
       } else {
-        Toast.fail('提交审批失败!', 2);
+        Toast.fail('操作失败', 2);
       }
     }
   },
@@ -162,23 +167,24 @@ export default {
   async fetchLoadMore(ctx) {
 
     ctx.setState({isLoading: true});
+
+    let params = {
+      pageNum: ctx.getState().currentPage,
+      rowCount: ctx.getState().pageSize,
+      ddid: '',
+      wsCode: 'ws_shenpi'
+    };
     const userInfo = StorageUtils.getUserInfo();
     if (userInfo && userInfo.userid) {
-      return await ctx.fn.DB.DingTalkAPI.getDaiJianList({
-        pageNum: ctx.getState().currentPage,
-        rowCount: ctx.getState().pageSize,
-        ddid: userInfo.userid,
-        wsCode: 'ws_shenpi'
-      }).catch(() => {
-        ctx.setState({
-          isLoading: false,
-          hasMore: true,
-        });
-        Toast.fail('获取数据列表错误!', 2);
-      });
-    } else {
-      return '';
+      params.ddid = userInfo.userid;
     }
+    return await ctx.fn.DB.DingTalkAPI.getDaiJianList(params).catch(() => {
+      ctx.setState({
+        isLoading: false,
+        hasMore: true,
+      });
+      Toast.fail('获取数据列表错误!', 2);
+    });
   },
 
 

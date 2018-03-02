@@ -21,6 +21,7 @@
   "biz.contact.createGroup": true,
   "biz.contact.externalComplexPicker": true,
   "biz.navigation.get": true,
+  "biz.navigation.setTitle": true,
   "biz.navigation.setIcon": true,
   "biz.navigation.setLeft": true,
   "biz.navigation.close": true,

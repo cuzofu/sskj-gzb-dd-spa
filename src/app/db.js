@@ -71,6 +71,13 @@ context.create('DingTalkAPI', {
       // `POST`、`PUT`或`PATCH`请求的最佳实战推荐设置
       'Content-Type': 'application/json;charset=utf-8'
     }
+  },
+
+  // 获取用户权限/validateRole/{userID}/{roleCode}
+  getRole: {
+    mock: false,
+    method: 'GET',
+    url: 'dingtalk/jc/role'
   }
 
 });

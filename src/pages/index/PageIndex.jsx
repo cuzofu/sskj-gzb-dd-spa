@@ -1,14 +1,17 @@
 require('./PageIndex.less');
 import logic from './PageLogic';
 import {Component, LogicRender} from 'refast';
-import {Carousel, Grid, List, WhiteSpace} from 'antd-mobile';
-import {Control} from 'react-keeper';
+import {Carousel, Grid, Icon, List, Result, WhiteSpace} from 'antd-mobile';
 
 const Item = List.Item;
 
 class Index extends Component {
   constructor(props) {
     super(props, logic);
+  }
+
+  componentWillMount() {
+    this.dispatch('getRole');
   }
 
   handleRwRoute(obj, number) {
@@ -40,6 +43,8 @@ class Index extends Component {
   }
 
   render() {
+
+    let menuList = this.state.menuList.filter(menu => menu.display);
 
     return (
       <div className="page-index">
@@ -78,27 +83,49 @@ class Index extends Component {
                   </div>
                 )}/>
         </div>
-
         <WhiteSpace size="lg"/>
-
         <div className="div-solid div-title">功能列表</div>
+        <div>
+          <Grid data={menuList} onClick={this.handleGnRoute.bind(this)} className="grid-bg"
+                columnNum={4}
+                renderItem={dataItem => (
+                  <div>
+                    <div className="grid-contia">
+                      <img
+                        src={dataItem.img}
+                        width="80"
+                        height="80"/>
+                    </div>
+                    <div className="grid-text">{dataItem.text}</div>
+                  </div>)}
+          />
+        </div>
+        {/*{
+          menuList && menuList.length > 0 ?
+            <div>
+              <Grid data={menuList} onClick={this.handleGnRoute.bind(this)} className="grid-bg"
+                    columnNum={4}
+                    renderItem={dataItem => (
+                      <div>
+                        <div className="grid-contia">
+                          <img
+                            src={dataItem.img}
+                            width="80"
+                            height="80"/>
+                        </div>
+                        <div className="grid-text">{dataItem.text}</div>
+                      </div>)}
+              />
+            </div>
+            :
+            <Result
+              img={<Icon type="cross-circle-o" className="icon" style={{ fill: '#F13642' }} />}
+              title="暂无权限"
+            />
 
-        <Grid data={this.state.menuList} onClick={this.handleGnRoute.bind(this)} className="grid-bg"
-              columnNum={4}
-              renderItem={dataItem => (
-                <div>
-                  <div className="grid-contia">
-                    <img
-                      src={dataItem.img}
-                      width="80"
-                      height="80"/>
-                  </div>
-                  <div className="grid-text">{dataItem.text}</div>
-                </div>)}
-        />
-
-        <WhiteSpace size="lg"/>
-        <div className="div-solid div-title">新闻</div>
+        }*/}
+        {/*<WhiteSpace size="lg"/>
+        <div className="div-solid div-title">新闻</div>*/}
 
       </div>
     );
