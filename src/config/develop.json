@@ -1,0 +1,10 @@
+{
+  "DINTALK_API": true,
+  "corpId": "ding6ab7b8092ead658e35c2f4657eb6378f",
+  "APP_URL": {
+    "url": "http://111.47.65.193:8000/jc/index.html"
+  },
+  "API_URL": "http://111.47.65.193:8000/",
+  "YCZAZ_URL": "http://www.ycjsjg.net/cmis/",
+  "PDF_URL": "http://219.139.128.134:1348/hbjd"
+}
