@@ -1,0 +1,30 @@
+{
+  "name": "sskj-gzb-dingding",
+  "options": {
+    "template": "C:\\Users\\Administrator\\.nowa-gui\\template\\dingyou-dingtalk-mobile-v_3",
+    "npm": "http://registry.npm.taobao.org",
+    "vars": {
+      "ENV": "test",
+      "__LOCAL__": true
+    },
+    "buildvars": {
+      "ENV": [
+        "product"
+      ],
+      "__LOCAL__": [
+        "true"
+      ]
+    },
+    "alias": {
+      "assets": "assets",
+      "config": "config",
+      "image": "assets/img",
+      "icon": "assets/icon",
+      "components": "components",
+      "dings": "dings",
+      "pages": "pages",
+      "db": "app/db.js",
+      "variables": "app/variables.js"
+    }
+  }
+}

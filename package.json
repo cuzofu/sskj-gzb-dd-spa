@@ -1,0 +1,34 @@
+{
+  "name": "sskj-gzb-dd-spa",
+  "author": "Administrator",
+  "version": "1.0.0",
+  "description": "An awesome project",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "scripts": {
+    "start": "nowa server -p 3000",
+    "build": "nowa build"
+  },
+  "homepage": "",
+  "license": "MIT",
+  "dependencies": {
+    "antd-mobile": "^1.0.5",
+    "natty-fetch": "~2.4.2",
+    "natty-storage": "~2.0.2",
+    "react": "^15.4.2",
+    "react-addons-shallow-compare": "^15.6.2",
+    "react-addons-update": "^15.6.0",
+    "react-avatar": "^2.4.0",
+    "react-dom": "^15.4.2",
+    "react-keeper": "^2.0.6",
+    "react-router": "^4.1.1",
+    "refast": "^1.1.0",
+    "svg-sprite-loader": "^0.3.0"
+  },
+  "devDependencies": {
+    "babel-plugin-import": "~1.0.1",
+    "babel-preset-stage-0": "^6.24.1"
+  }
+}
